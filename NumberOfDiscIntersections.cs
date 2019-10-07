@@ -1,46 +1,35 @@
 public static int solution(int[] A)
 {
     // obtain ordered starts array
-    long[] starts = new long[A.Length];
-    for (int i = 0; i < A.Length; i++)
+    long n = A.Length;
+    if (n < 2)
+        return 0;
+    long numIntersecs = n * (n - 1) / 2; // unordered pairs, initialized to max possible
+    long[] hiVals = new long[n];
+    long[] loVals = new long[n];
+    for (long i = 0; i < n; i++)
     {
-        starts[i] = i - A[i];
+        hiVals[i] = i + A[i]; // high value of disk edge (along x-axis)
+        loVals[i] = i - A[i]; // low value of disk edge (along x-axis)
     }
-    Array.Sort(starts);
-
-    // obtain ordered ends array
-    long[] ends = new long[A.Length];
-    for (int i = 0; i < A.Length; i++)
+    Array.Sort(hiVals);
+    Array.Sort(loVals);
+    int jLo = 0; // initialize inner iterator only once
+    for (int iHi = 0; iHi < n; iHi++)
     {
-        ends[i] = i + A[i];
+        for ( ; jLo < n; jLo++) // nested, but only cycled thru once (or twice, sorta)
+        {
+            if (loVals[jLo] > hiVals[iHi]) // disks don't intersect if one's lo > other's hi
+            {
+                numIntersecs -= n - jLo; // decrement by the num of lo values > this hi value
+                break; // don't increment iterator, check this low value again next time
+            }
+        }
+        if (jLo == n)
+            break; // no more low values > high values
     }
-    Array.Sort(ends);
-
-    // find intersections
-    int intersections = 0;
-    int counter = 0;
-    int startsIndex = 0;
-    int endsIndex = 0;
-
-    while (startsIndex < starts.Length || endsIndex < ends.Length)
-    {
-        if (startsIndex < starts.Length && starts[startsIndex] <= ends[endsIndex])
-        {
-            counter++;
-            startsIndex++;
-        }
-        else
-        {
-            counter--;
-            intersections = intersections + counter;
-            endsIndex = endsIndex <= (ends.Length - 1) ? endsIndex + 1 : endsIndex;
-        }
-
-        if (intersections > 10000000)
-        {
-            return -1;
-        }
-    }
-
-    return intersections;
+    if (numIntersecs > 10E6)
+        return -1;
+    else
+       return (int) numIntersecs;
 }

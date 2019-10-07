@@ -4,6 +4,8 @@ class Solution {
     public int solution(int[] A)
     {
         int[] counter = new int[maxSize];
+        
+        Array.Sort(A);
 
         foreach (int number in A)
         {

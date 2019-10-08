@@ -1,68 +1,52 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
-// using simple binary search similar to JS solution here: http://stackoverflow.com/questions/19466115/peak-and-flag-codility-latest-chellange
-public static int solution(int[] A)
-{
-    if (A.Length < 3)
-    {
-        return 0;
-    }
-
-    // get a new array with peaks
-    List<int> peaks = new List<int>();
-    for (int i = 1; i < A.Length - 1; i++)
-    {
-        if (A[i] > A[i - 1] && A[i] > A[i + 1])
+class Solution {
+    public int solution(int[] A) {
+        List<int> peaks = new List<int>();
+        for (int i = 1; i < A.Length - 1; i++)
         {
-            peaks.Add(i);
+            if (A[i - 1] < A[i] && A[i + 1] < A[i])
+            {
+                peaks.Add(i);
+            }
         }
-    }
-
-    // if a 1-2 peaks, we can return them directly
-    if (peaks.Count <= 2)
-    {
-        return peaks.Count;
-    }
-
-    // start binary search
-    int maxFlags = peaks.Count;
-    int minFlags = 1;
-    int result = 0;
-    while (maxFlags >= minFlags)
-    {
-        int flags = (minFlags + maxFlags) / 2; // get middle of interval (binary search)
-        if (CheckFlags(flags, peaks))
+        if (peaks.Count == 1 || peaks.Count == 0)
         {
-            result = flags;
-            minFlags = flags + 1;
+            return peaks.Count;
         }
-        else
+        int leastFlags = 1;
+        int mostFlags = peaks.Count;
+        int result = 1;
+        while (leastFlags <= mostFlags)
         {
-            maxFlags = flags - 1;
+            int flags = (leastFlags + mostFlags) / 2;
+            bool suc = false;
+            int used = 0;
+            int mark = peaks[0];
+            for (int i = 0; i < peaks.Count; i++)
+            {
+                if (peaks[i] >= mark)
+                {
+                    used++;
+                    mark = peaks[i] + flags;
+                    if (used == flags)
+                    {
+                        suc = true;
+                        break;
+                    }
+                }
+            }
+            if (suc)
+            {
+                result = flags;
+                leastFlags = flags + 1;
+            }
+            else
+            {
+                mostFlags = flags - 1;
+            }
         }
+        return result;
     }
-
-    return result;
-}
-
-private static bool CheckFlags(int flagsCount, List<int> flags)
-{
-    int i = 1;
-    // assume first flag in first position
-    int lastFlag = flags[0]; 
-    int actualFlags = flagsCount - 1;
-    while (actualFlags > 0 && i < flags.Count)
-    {
-        if (flags[i] - lastFlag >= flagsCount)
-        {
-            actualFlags--; // can put one flag
-            lastFlag = flags[i];
-        }
-
-        i++;
-    }
-
-    return actualFlags == 0; // all flags were placed
 }

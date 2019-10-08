@@ -15,8 +15,8 @@ class Solution {
     
         // get a new array with peaks
         bool[] peaks = new bool[A.Length];
-        int peaksCounter = 0;
-        for (int i = 1; i < A.Length - 1; i++)
+        Int32 peaksCounter = 0;
+        for (Int32 i = 1; i < A.Length - 1; i++)
         {
             if (A[i] > A[i - 1] && A[i] > A[i + 1])
             {
@@ -26,9 +26,9 @@ class Solution {
         }
     
         // start testing each possible division
-        for (int groupSize = 1; groupSize <= A.Length; groupSize++)
+        for (Int32 groupSize = 1; groupSize < (A.Length+1); groupSize++)
         {
-            if (A.Length % groupSize == 0) // is divisible
+            if ((A.Length % groupSize) == 0) // is divisible
             {
                 // test actual divisor
                 if (PeaksCorrect(peaks, peaksCounter, groupSize))
@@ -41,7 +41,7 @@ class Solution {
         return 0;
     }
     
-    private static bool PeaksCorrect(bool[] peaks, int peaksCounter, int groupSize)
+    public bool PeaksCorrect(bool[] peaks, Int32 peaksCounter, Int32 groupSize)
     {
         int groupNumber = peaks.Length / groupSize;
     
@@ -52,7 +52,7 @@ class Solution {
         }
     
         // this is what should be improved (should only store the peaks indexes, not the whole array)
-        for (int i = 0; i < groupNumber; i++)
+        for (Int32 i = 0; i < groupNumber; i++)
         {
             bool hasPeak = peaks.Skip(i * groupSize).Take(groupSize).Any(t => t == true);
     

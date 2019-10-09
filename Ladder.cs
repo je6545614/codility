@@ -2,17 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-class Solution
-{
-    public void Main(string[] args)
-    {
-        var response = solution(new int[] { 4, 4, 5, 5, 1 }, new int[] { 3, 2, 4, 3, 1 });
-
-        Console.WriteLine(string.Join(",", response));
-    }
-
-    public int[] solution(int[] A, int[] B)
-    {
+class Solution {
+    public int[] solution(int[] A, int[] B) {
         int maxLadderSize = A.Max();
 
         ulong[] fibo = BuildFiboSecuence(maxLadderSize +2);
@@ -27,7 +18,7 @@ class Solution
 
         return result;
     }
-
+    
     public ulong[] BuildFiboSecuence(int ladderSize)
     {
         ulong[] fibo = new ulong[ladderSize];

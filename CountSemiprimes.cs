@@ -1,22 +1,19 @@
 using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
-using System.Text;
+using System.Collections.Generic;
 
-public class Solution
-{
-    public static void Main(string[] args)
-    {
-        solution(26, new[] { 1, 4, 16 }, new[] { 26, 10, 20 });
-    }
+// you can write to stdout for debugging purposes, e.g.
+// Console.WriteLine("this is a debug message");
 
-    public static int[] solution(int N, int[] P, int[] Q)
-    {
+class Solution {
+    public int[] solution(int N, int[] P, int[] Q) {
         var sieveInput = Enumerable.Repeat(true, N + 1).ToArray();
         var nSqrt = Math.Sqrt(N);
 
         // perform sieve
-        sieveInput[0] = false; sieveInput[1] = false;
+        sieveInput[0] = false; 
+        sieveInput[1] = false;
         for (int i = 2; i < nSqrt; i++)
         {
             if (sieveInput[i])

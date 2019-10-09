@@ -1,26 +1,37 @@
 using System;
-// you can also use other imports, for example:
-// using System.Collections.Generic;
-
-// you can write to stdout for debugging purposes, e.g.
-// Console.WriteLine("this is a debug message");
+using System.Linq;
 
 class Solution {
     public int[] solution(int[] A) {
-        // write your code in C# 6.0 with .NET 4.5 (Mono)
-        int[] result = new int[A.Length];
-        
-        for(int i=0; i<result.Length; i++){
-            result[i] = 0;
-            int divTemp = A[i];
-            for(int x=0; x<A.Length; x++){
-                if((divTemp % A[x]) != 0){
-                    result[i] += 1;
-                }
-            }
-        }
-        
-        return result;
-        
+    int N = A.Length;
+	int[] counts = new int[(A.Max() + 1)];
+
+	for (int i = 0; i < N; ++i)
+	{
+		counts[A[i]] += 1;
+	}
+
+	int[] answer = new int[N];
+
+	for (int i = 0; i < N; ++i)
+	{
+		int divisors = 0;
+
+		for (int j = 1; j * j <= A[i]; ++j)
+		{
+			if (A[i] % j == 0)
+			{
+				divisors += counts[j];
+				if (A[i] / j != j)
+				{
+					divisors += counts[A[i] / j];
+				}
+			}
+		}
+
+		answer[i] = N - divisors;
+	}
+
+	return answer;
     }
 }

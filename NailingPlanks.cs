@@ -40,7 +40,7 @@ class Solution {
             
             for(i=0; i<mid; i++) {
                 try{
-                totalNails[C[i]] = 1;
+                    totalNails[C[i]] = 1;
                 }catch(Exception ex){
                     Array.Resize(ref totalNails, totalNails.Length + 1);
                     totalNails[totalNails.GetUpperBound(0)] = 1;

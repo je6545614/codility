@@ -1,21 +1,12 @@
 using System;
 
-class Solution
-{
-    public static void Main(string[] args)
-    {
-        var response = solution(4, new int[] { 1, 2, 3, 4, 1, 1, 3 });
-
-        Console.WriteLine(string.Join(",", response));
-    }
-
-    public static int solution(int k, int[] A)
-    {
+class Solution {
+    public int solution(int K, int[] A) {
         int numberOfRopes = 0;
         int currentRopeLenght = 0;
         for (int i = 0; i < A.Length; i++)
         {
-            if (A[i] >= k)
+            if (A[i] >= K)
             {
                 numberOfRopes++;
                 currentRopeLenght = 0;
@@ -23,7 +14,7 @@ class Solution
             }
 
             currentRopeLenght += A[i];
-            if (currentRopeLenght >= k)
+            if (currentRopeLenght >= K)
             {
                 numberOfRopes++;
                 currentRopeLenght = 0;

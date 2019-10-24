@@ -41,7 +41,10 @@ mov!e.mkv 10000b";
             }
         }
 
-        string result = "music " + music + "b\n" + "image " + image + "b\n" + "movie " + movie + "b\n" + "other " + other + "b\n";
+        string result = "music " + music + "b" + "\n" +
+            "image " + image + "b" + "\n" +
+            "movie " + movie + "b" + "\n" +
+            "other " + other + "b";
         return result;
     }
 }

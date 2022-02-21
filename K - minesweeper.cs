@@ -41,7 +41,7 @@ public void solution(int N, int[] R, int[] C)
             for (int i = 0; i < N; i++)
             {
                 for (int j = 0; j < N; j++)
-                    Console.Write(arr_fields[i, j]);
+                    Console.Write(arr_fields[i, j] == -1 ? arr_fields[i, j].ToString().Replace("-1", "B") : arr_fields[i, j].ToString());
                 Console.WriteLine();
             }
 
